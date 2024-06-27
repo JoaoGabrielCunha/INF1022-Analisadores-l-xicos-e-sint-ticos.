@@ -1,0 +1,869 @@
+Created by PLY version 3.11 (http://www.dabeaz.com/ply)
+
+Grammar
+
+Rule 0     S' -> programa
+Rule 1     programa -> INICIO varlist MONITOR monitor EXECUTE cmds TERMINO
+Rule 2     monitor -> varlist
+Rule 3     varlist -> ID COMMA varlist
+Rule 4     varlist -> ID
+Rule 5     cmds -> cmd cmds
+Rule 6     cmds -> cmd
+Rule 7     cmd -> ID EQUALS expr
+Rule 8     cmd -> ZERO LPAREN ID RPAREN
+Rule 9     cmd -> ENQUANTO ID FACA cmds FIM
+Rule 10    cmd -> IF expr THEN cmds ELSE cmds ENDIF
+Rule 11    cmd -> IF expr THEN cmds ENDIF
+Rule 12    cmd -> EVAL LPAREN expr COMMA expr COMMA cmds RPAREN
+Rule 13    cmd -> EVAL cmds NUMBER FIM
+Rule 14    expr -> expr PLUS expr
+Rule 15    expr -> expr MULTIPLY expr
+Rule 16    expr -> LPAREN expr RPAREN
+Rule 17    expr -> NUMBER
+Rule 18    expr -> ID
+Rule 19    expr -> NEG expr
+
+Terminals, with rules where they appear
+
+COMMA                : 3 12 12
+ELSE                 : 10
+ENDIF                : 10 11
+ENQUANTO             : 9
+EQUALS               : 7
+EVAL                 : 12 13
+EXECUTE              : 1
+FACA                 : 9
+FIM                  : 9 13
+ID                   : 3 4 7 8 9 18
+IF                   : 10 11
+INICIO               : 1
+LPAREN               : 8 12 16
+MONITOR              : 1
+MULTIPLY             : 15
+NEG                  : 19
+NUMBER               : 13 17
+PLUS                 : 14
+RPAREN               : 8 12 16
+TERMINO              : 1
+THEN                 : 10 11
+ZERO                 : 8
+error                : 
+
+Nonterminals, with rules where they appear
+
+cmd                  : 5 6
+cmds                 : 1 5 9 10 10 11 12 13
+expr                 : 7 10 11 12 12 14 14 15 15 16 19
+monitor              : 1
+programa             : 0
+varlist              : 1 2 3
+
+Parsing method: LALR
+
+state 0
+
+    (0) S' -> . programa
+    (1) programa -> . INICIO varlist MONITOR monitor EXECUTE cmds TERMINO
+
+    INICIO          shift and go to state 2
+
+    programa                       shift and go to state 1
+
+state 1
+
+    (0) S' -> programa .
+
+
+
+state 2
+
+    (1) programa -> INICIO . varlist MONITOR monitor EXECUTE cmds TERMINO
+    (3) varlist -> . ID COMMA varlist
+    (4) varlist -> . ID
+
+    ID              shift and go to state 4
+
+    varlist                        shift and go to state 3
+
+state 3
+
+    (1) programa -> INICIO varlist . MONITOR monitor EXECUTE cmds TERMINO
+
+    MONITOR         shift and go to state 5
+
+
+state 4
+
+    (3) varlist -> ID . COMMA varlist
+    (4) varlist -> ID .
+
+    COMMA           shift and go to state 6
+    MONITOR         reduce using rule 4 (varlist -> ID .)
+    EXECUTE         reduce using rule 4 (varlist -> ID .)
+
+
+state 5
+
+    (1) programa -> INICIO varlist MONITOR . monitor EXECUTE cmds TERMINO
+    (2) monitor -> . varlist
+    (3) varlist -> . ID COMMA varlist
+    (4) varlist -> . ID
+
+    ID              shift and go to state 4
+
+    varlist                        shift and go to state 7
+    monitor                        shift and go to state 8
+
+state 6
+
+    (3) varlist -> ID COMMA . varlist
+    (3) varlist -> . ID COMMA varlist
+    (4) varlist -> . ID
+
+    ID              shift and go to state 4
+
+    varlist                        shift and go to state 9
+
+state 7
+
+    (2) monitor -> varlist .
+
+    EXECUTE         reduce using rule 2 (monitor -> varlist .)
+
+
+state 8
+
+    (1) programa -> INICIO varlist MONITOR monitor . EXECUTE cmds TERMINO
+
+    EXECUTE         shift and go to state 10
+
+
+state 9
+
+    (3) varlist -> ID COMMA varlist .
+
+    MONITOR         reduce using rule 3 (varlist -> ID COMMA varlist .)
+    EXECUTE         reduce using rule 3 (varlist -> ID COMMA varlist .)
+
+
+state 10
+
+    (1) programa -> INICIO varlist MONITOR monitor EXECUTE . cmds TERMINO
+    (5) cmds -> . cmd cmds
+    (6) cmds -> . cmd
+    (7) cmd -> . ID EQUALS expr
+    (8) cmd -> . ZERO LPAREN ID RPAREN
+    (9) cmd -> . ENQUANTO ID FACA cmds FIM
+    (10) cmd -> . IF expr THEN cmds ELSE cmds ENDIF
+    (11) cmd -> . IF expr THEN cmds ENDIF
+    (12) cmd -> . EVAL LPAREN expr COMMA expr COMMA cmds RPAREN
+    (13) cmd -> . EVAL cmds NUMBER FIM
+
+    ID              shift and go to state 13
+    ZERO            shift and go to state 14
+    ENQUANTO        shift and go to state 15
+    IF              shift and go to state 16
+    EVAL            shift and go to state 17
+
+    cmds                           shift and go to state 11
+    cmd                            shift and go to state 12
+
+state 11
+
+    (1) programa -> INICIO varlist MONITOR monitor EXECUTE cmds . TERMINO
+
+    TERMINO         shift and go to state 18
+
+
+state 12
+
+    (5) cmds -> cmd . cmds
+    (6) cmds -> cmd .
+    (5) cmds -> . cmd cmds
+    (6) cmds -> . cmd
+    (7) cmd -> . ID EQUALS expr
+    (8) cmd -> . ZERO LPAREN ID RPAREN
+    (9) cmd -> . ENQUANTO ID FACA cmds FIM
+    (10) cmd -> . IF expr THEN cmds ELSE cmds ENDIF
+    (11) cmd -> . IF expr THEN cmds ENDIF
+    (12) cmd -> . EVAL LPAREN expr COMMA expr COMMA cmds RPAREN
+    (13) cmd -> . EVAL cmds NUMBER FIM
+
+    TERMINO         reduce using rule 6 (cmds -> cmd .)
+    NUMBER          reduce using rule 6 (cmds -> cmd .)
+    FIM             reduce using rule 6 (cmds -> cmd .)
+    ELSE            reduce using rule 6 (cmds -> cmd .)
+    ENDIF           reduce using rule 6 (cmds -> cmd .)
+    RPAREN          reduce using rule 6 (cmds -> cmd .)
+    ID              shift and go to state 13
+    ZERO            shift and go to state 14
+    ENQUANTO        shift and go to state 15
+    IF              shift and go to state 16
+    EVAL            shift and go to state 17
+
+    cmd                            shift and go to state 12
+    cmds                           shift and go to state 19
+
+state 13
+
+    (7) cmd -> ID . EQUALS expr
+
+    EQUALS          shift and go to state 20
+
+
+state 14
+
+    (8) cmd -> ZERO . LPAREN ID RPAREN
+
+    LPAREN          shift and go to state 21
+
+
+state 15
+
+    (9) cmd -> ENQUANTO . ID FACA cmds FIM
+
+    ID              shift and go to state 22
+
+
+state 16
+
+    (10) cmd -> IF . expr THEN cmds ELSE cmds ENDIF
+    (11) cmd -> IF . expr THEN cmds ENDIF
+    (14) expr -> . expr PLUS expr
+    (15) expr -> . expr MULTIPLY expr
+    (16) expr -> . LPAREN expr RPAREN
+    (17) expr -> . NUMBER
+    (18) expr -> . ID
+    (19) expr -> . NEG expr
+
+    LPAREN          shift and go to state 24
+    NUMBER          shift and go to state 25
+    ID              shift and go to state 26
+    NEG             shift and go to state 27
+
+    expr                           shift and go to state 23
+
+state 17
+
+    (12) cmd -> EVAL . LPAREN expr COMMA expr COMMA cmds RPAREN
+    (13) cmd -> EVAL . cmds NUMBER FIM
+    (5) cmds -> . cmd cmds
+    (6) cmds -> . cmd
+    (7) cmd -> . ID EQUALS expr
+    (8) cmd -> . ZERO LPAREN ID RPAREN
+    (9) cmd -> . ENQUANTO ID FACA cmds FIM
+    (10) cmd -> . IF expr THEN cmds ELSE cmds ENDIF
+    (11) cmd -> . IF expr THEN cmds ENDIF
+    (12) cmd -> . EVAL LPAREN expr COMMA expr COMMA cmds RPAREN
+    (13) cmd -> . EVAL cmds NUMBER FIM
+
+    LPAREN          shift and go to state 28
+    ID              shift and go to state 13
+    ZERO            shift and go to state 14
+    ENQUANTO        shift and go to state 15
+    IF              shift and go to state 16
+    EVAL            shift and go to state 17
+
+    cmds                           shift and go to state 29
+    cmd                            shift and go to state 12
+
+state 18
+
+    (1) programa -> INICIO varlist MONITOR monitor EXECUTE cmds TERMINO .
+
+    $end            reduce using rule 1 (programa -> INICIO varlist MONITOR monitor EXECUTE cmds TERMINO .)
+
+
+state 19
+
+    (5) cmds -> cmd cmds .
+
+    TERMINO         reduce using rule 5 (cmds -> cmd cmds .)
+    NUMBER          reduce using rule 5 (cmds -> cmd cmds .)
+    FIM             reduce using rule 5 (cmds -> cmd cmds .)
+    ELSE            reduce using rule 5 (cmds -> cmd cmds .)
+    ENDIF           reduce using rule 5 (cmds -> cmd cmds .)
+    RPAREN          reduce using rule 5 (cmds -> cmd cmds .)
+
+
+state 20
+
+    (7) cmd -> ID EQUALS . expr
+    (14) expr -> . expr PLUS expr
+    (15) expr -> . expr MULTIPLY expr
+    (16) expr -> . LPAREN expr RPAREN
+    (17) expr -> . NUMBER
+    (18) expr -> . ID
+    (19) expr -> . NEG expr
+
+    LPAREN          shift and go to state 24
+    NUMBER          shift and go to state 25
+    ID              shift and go to state 26
+    NEG             shift and go to state 27
+
+    expr                           shift and go to state 30
+
+state 21
+
+    (8) cmd -> ZERO LPAREN . ID RPAREN
+
+    ID              shift and go to state 31
+
+
+state 22
+
+    (9) cmd -> ENQUANTO ID . FACA cmds FIM
+
+    FACA            shift and go to state 32
+
+
+state 23
+
+    (10) cmd -> IF expr . THEN cmds ELSE cmds ENDIF
+    (11) cmd -> IF expr . THEN cmds ENDIF
+    (14) expr -> expr . PLUS expr
+    (15) expr -> expr . MULTIPLY expr
+
+    THEN            shift and go to state 33
+    PLUS            shift and go to state 34
+    MULTIPLY        shift and go to state 35
+
+
+state 24
+
+    (16) expr -> LPAREN . expr RPAREN
+    (14) expr -> . expr PLUS expr
+    (15) expr -> . expr MULTIPLY expr
+    (16) expr -> . LPAREN expr RPAREN
+    (17) expr -> . NUMBER
+    (18) expr -> . ID
+    (19) expr -> . NEG expr
+
+    LPAREN          shift and go to state 24
+    NUMBER          shift and go to state 25
+    ID              shift and go to state 26
+    NEG             shift and go to state 27
+
+    expr                           shift and go to state 36
+
+state 25
+
+    (17) expr -> NUMBER .
+
+    THEN            reduce using rule 17 (expr -> NUMBER .)
+    PLUS            reduce using rule 17 (expr -> NUMBER .)
+    MULTIPLY        reduce using rule 17 (expr -> NUMBER .)
+    ID              reduce using rule 17 (expr -> NUMBER .)
+    ZERO            reduce using rule 17 (expr -> NUMBER .)
+    ENQUANTO        reduce using rule 17 (expr -> NUMBER .)
+    IF              reduce using rule 17 (expr -> NUMBER .)
+    EVAL            reduce using rule 17 (expr -> NUMBER .)
+    TERMINO         reduce using rule 17 (expr -> NUMBER .)
+    NUMBER          reduce using rule 17 (expr -> NUMBER .)
+    FIM             reduce using rule 17 (expr -> NUMBER .)
+    ELSE            reduce using rule 17 (expr -> NUMBER .)
+    ENDIF           reduce using rule 17 (expr -> NUMBER .)
+    RPAREN          reduce using rule 17 (expr -> NUMBER .)
+    COMMA           reduce using rule 17 (expr -> NUMBER .)
+
+
+state 26
+
+    (18) expr -> ID .
+
+    THEN            reduce using rule 18 (expr -> ID .)
+    PLUS            reduce using rule 18 (expr -> ID .)
+    MULTIPLY        reduce using rule 18 (expr -> ID .)
+    ID              reduce using rule 18 (expr -> ID .)
+    ZERO            reduce using rule 18 (expr -> ID .)
+    ENQUANTO        reduce using rule 18 (expr -> ID .)
+    IF              reduce using rule 18 (expr -> ID .)
+    EVAL            reduce using rule 18 (expr -> ID .)
+    TERMINO         reduce using rule 18 (expr -> ID .)
+    NUMBER          reduce using rule 18 (expr -> ID .)
+    FIM             reduce using rule 18 (expr -> ID .)
+    ELSE            reduce using rule 18 (expr -> ID .)
+    ENDIF           reduce using rule 18 (expr -> ID .)
+    RPAREN          reduce using rule 18 (expr -> ID .)
+    COMMA           reduce using rule 18 (expr -> ID .)
+
+
+state 27
+
+    (19) expr -> NEG . expr
+    (14) expr -> . expr PLUS expr
+    (15) expr -> . expr MULTIPLY expr
+    (16) expr -> . LPAREN expr RPAREN
+    (17) expr -> . NUMBER
+    (18) expr -> . ID
+    (19) expr -> . NEG expr
+
+    LPAREN          shift and go to state 24
+    NUMBER          shift and go to state 25
+    ID              shift and go to state 26
+    NEG             shift and go to state 27
+
+    expr                           shift and go to state 37
+
+state 28
+
+    (12) cmd -> EVAL LPAREN . expr COMMA expr COMMA cmds RPAREN
+    (14) expr -> . expr PLUS expr
+    (15) expr -> . expr MULTIPLY expr
+    (16) expr -> . LPAREN expr RPAREN
+    (17) expr -> . NUMBER
+    (18) expr -> . ID
+    (19) expr -> . NEG expr
+
+    LPAREN          shift and go to state 24
+    NUMBER          shift and go to state 25
+    ID              shift and go to state 26
+    NEG             shift and go to state 27
+
+    expr                           shift and go to state 38
+
+state 29
+
+    (13) cmd -> EVAL cmds . NUMBER FIM
+
+    NUMBER          shift and go to state 39
+
+
+state 30
+
+    (7) cmd -> ID EQUALS expr .
+    (14) expr -> expr . PLUS expr
+    (15) expr -> expr . MULTIPLY expr
+
+    ID              reduce using rule 7 (cmd -> ID EQUALS expr .)
+    ZERO            reduce using rule 7 (cmd -> ID EQUALS expr .)
+    ENQUANTO        reduce using rule 7 (cmd -> ID EQUALS expr .)
+    IF              reduce using rule 7 (cmd -> ID EQUALS expr .)
+    EVAL            reduce using rule 7 (cmd -> ID EQUALS expr .)
+    TERMINO         reduce using rule 7 (cmd -> ID EQUALS expr .)
+    NUMBER          reduce using rule 7 (cmd -> ID EQUALS expr .)
+    FIM             reduce using rule 7 (cmd -> ID EQUALS expr .)
+    ELSE            reduce using rule 7 (cmd -> ID EQUALS expr .)
+    ENDIF           reduce using rule 7 (cmd -> ID EQUALS expr .)
+    RPAREN          reduce using rule 7 (cmd -> ID EQUALS expr .)
+    PLUS            shift and go to state 34
+    MULTIPLY        shift and go to state 35
+
+
+state 31
+
+    (8) cmd -> ZERO LPAREN ID . RPAREN
+
+    RPAREN          shift and go to state 40
+
+
+state 32
+
+    (9) cmd -> ENQUANTO ID FACA . cmds FIM
+    (5) cmds -> . cmd cmds
+    (6) cmds -> . cmd
+    (7) cmd -> . ID EQUALS expr
+    (8) cmd -> . ZERO LPAREN ID RPAREN
+    (9) cmd -> . ENQUANTO ID FACA cmds FIM
+    (10) cmd -> . IF expr THEN cmds ELSE cmds ENDIF
+    (11) cmd -> . IF expr THEN cmds ENDIF
+    (12) cmd -> . EVAL LPAREN expr COMMA expr COMMA cmds RPAREN
+    (13) cmd -> . EVAL cmds NUMBER FIM
+
+    ID              shift and go to state 13
+    ZERO            shift and go to state 14
+    ENQUANTO        shift and go to state 15
+    IF              shift and go to state 16
+    EVAL            shift and go to state 17
+
+    cmds                           shift and go to state 41
+    cmd                            shift and go to state 12
+
+state 33
+
+    (10) cmd -> IF expr THEN . cmds ELSE cmds ENDIF
+    (11) cmd -> IF expr THEN . cmds ENDIF
+    (5) cmds -> . cmd cmds
+    (6) cmds -> . cmd
+    (7) cmd -> . ID EQUALS expr
+    (8) cmd -> . ZERO LPAREN ID RPAREN
+    (9) cmd -> . ENQUANTO ID FACA cmds FIM
+    (10) cmd -> . IF expr THEN cmds ELSE cmds ENDIF
+    (11) cmd -> . IF expr THEN cmds ENDIF
+    (12) cmd -> . EVAL LPAREN expr COMMA expr COMMA cmds RPAREN
+    (13) cmd -> . EVAL cmds NUMBER FIM
+
+    ID              shift and go to state 13
+    ZERO            shift and go to state 14
+    ENQUANTO        shift and go to state 15
+    IF              shift and go to state 16
+    EVAL            shift and go to state 17
+
+    cmds                           shift and go to state 42
+    cmd                            shift and go to state 12
+
+state 34
+
+    (14) expr -> expr PLUS . expr
+    (14) expr -> . expr PLUS expr
+    (15) expr -> . expr MULTIPLY expr
+    (16) expr -> . LPAREN expr RPAREN
+    (17) expr -> . NUMBER
+    (18) expr -> . ID
+    (19) expr -> . NEG expr
+
+    LPAREN          shift and go to state 24
+    NUMBER          shift and go to state 25
+    ID              shift and go to state 26
+    NEG             shift and go to state 27
+
+    expr                           shift and go to state 43
+
+state 35
+
+    (15) expr -> expr MULTIPLY . expr
+    (14) expr -> . expr PLUS expr
+    (15) expr -> . expr MULTIPLY expr
+    (16) expr -> . LPAREN expr RPAREN
+    (17) expr -> . NUMBER
+    (18) expr -> . ID
+    (19) expr -> . NEG expr
+
+    LPAREN          shift and go to state 24
+    NUMBER          shift and go to state 25
+    ID              shift and go to state 26
+    NEG             shift and go to state 27
+
+    expr                           shift and go to state 44
+
+state 36
+
+    (16) expr -> LPAREN expr . RPAREN
+    (14) expr -> expr . PLUS expr
+    (15) expr -> expr . MULTIPLY expr
+
+    RPAREN          shift and go to state 45
+    PLUS            shift and go to state 34
+    MULTIPLY        shift and go to state 35
+
+
+state 37
+
+    (19) expr -> NEG expr .
+    (14) expr -> expr . PLUS expr
+    (15) expr -> expr . MULTIPLY expr
+
+    THEN            reduce using rule 19 (expr -> NEG expr .)
+    PLUS            reduce using rule 19 (expr -> NEG expr .)
+    MULTIPLY        reduce using rule 19 (expr -> NEG expr .)
+    ID              reduce using rule 19 (expr -> NEG expr .)
+    ZERO            reduce using rule 19 (expr -> NEG expr .)
+    ENQUANTO        reduce using rule 19 (expr -> NEG expr .)
+    IF              reduce using rule 19 (expr -> NEG expr .)
+    EVAL            reduce using rule 19 (expr -> NEG expr .)
+    TERMINO         reduce using rule 19 (expr -> NEG expr .)
+    NUMBER          reduce using rule 19 (expr -> NEG expr .)
+    FIM             reduce using rule 19 (expr -> NEG expr .)
+    ELSE            reduce using rule 19 (expr -> NEG expr .)
+    ENDIF           reduce using rule 19 (expr -> NEG expr .)
+    RPAREN          reduce using rule 19 (expr -> NEG expr .)
+    COMMA           reduce using rule 19 (expr -> NEG expr .)
+
+  ! PLUS            [ shift and go to state 34 ]
+  ! MULTIPLY        [ shift and go to state 35 ]
+
+
+state 38
+
+    (12) cmd -> EVAL LPAREN expr . COMMA expr COMMA cmds RPAREN
+    (14) expr -> expr . PLUS expr
+    (15) expr -> expr . MULTIPLY expr
+
+    COMMA           shift and go to state 46
+    PLUS            shift and go to state 34
+    MULTIPLY        shift and go to state 35
+
+
+state 39
+
+    (13) cmd -> EVAL cmds NUMBER . FIM
+
+    FIM             shift and go to state 47
+
+
+state 40
+
+    (8) cmd -> ZERO LPAREN ID RPAREN .
+
+    ID              reduce using rule 8 (cmd -> ZERO LPAREN ID RPAREN .)
+    ZERO            reduce using rule 8 (cmd -> ZERO LPAREN ID RPAREN .)
+    ENQUANTO        reduce using rule 8 (cmd -> ZERO LPAREN ID RPAREN .)
+    IF              reduce using rule 8 (cmd -> ZERO LPAREN ID RPAREN .)
+    EVAL            reduce using rule 8 (cmd -> ZERO LPAREN ID RPAREN .)
+    TERMINO         reduce using rule 8 (cmd -> ZERO LPAREN ID RPAREN .)
+    NUMBER          reduce using rule 8 (cmd -> ZERO LPAREN ID RPAREN .)
+    FIM             reduce using rule 8 (cmd -> ZERO LPAREN ID RPAREN .)
+    ELSE            reduce using rule 8 (cmd -> ZERO LPAREN ID RPAREN .)
+    ENDIF           reduce using rule 8 (cmd -> ZERO LPAREN ID RPAREN .)
+    RPAREN          reduce using rule 8 (cmd -> ZERO LPAREN ID RPAREN .)
+
+
+state 41
+
+    (9) cmd -> ENQUANTO ID FACA cmds . FIM
+
+    FIM             shift and go to state 48
+
+
+state 42
+
+    (10) cmd -> IF expr THEN cmds . ELSE cmds ENDIF
+    (11) cmd -> IF expr THEN cmds . ENDIF
+
+    ELSE            shift and go to state 49
+    ENDIF           shift and go to state 50
+
+
+state 43
+
+    (14) expr -> expr PLUS expr .
+    (14) expr -> expr . PLUS expr
+    (15) expr -> expr . MULTIPLY expr
+
+    THEN            reduce using rule 14 (expr -> expr PLUS expr .)
+    PLUS            reduce using rule 14 (expr -> expr PLUS expr .)
+    MULTIPLY        reduce using rule 14 (expr -> expr PLUS expr .)
+    ID              reduce using rule 14 (expr -> expr PLUS expr .)
+    ZERO            reduce using rule 14 (expr -> expr PLUS expr .)
+    ENQUANTO        reduce using rule 14 (expr -> expr PLUS expr .)
+    IF              reduce using rule 14 (expr -> expr PLUS expr .)
+    EVAL            reduce using rule 14 (expr -> expr PLUS expr .)
+    TERMINO         reduce using rule 14 (expr -> expr PLUS expr .)
+    NUMBER          reduce using rule 14 (expr -> expr PLUS expr .)
+    FIM             reduce using rule 14 (expr -> expr PLUS expr .)
+    ELSE            reduce using rule 14 (expr -> expr PLUS expr .)
+    ENDIF           reduce using rule 14 (expr -> expr PLUS expr .)
+    RPAREN          reduce using rule 14 (expr -> expr PLUS expr .)
+    COMMA           reduce using rule 14 (expr -> expr PLUS expr .)
+
+  ! PLUS            [ shift and go to state 34 ]
+  ! MULTIPLY        [ shift and go to state 35 ]
+
+
+state 44
+
+    (15) expr -> expr MULTIPLY expr .
+    (14) expr -> expr . PLUS expr
+    (15) expr -> expr . MULTIPLY expr
+
+    THEN            reduce using rule 15 (expr -> expr MULTIPLY expr .)
+    PLUS            reduce using rule 15 (expr -> expr MULTIPLY expr .)
+    MULTIPLY        reduce using rule 15 (expr -> expr MULTIPLY expr .)
+    ID              reduce using rule 15 (expr -> expr MULTIPLY expr .)
+    ZERO            reduce using rule 15 (expr -> expr MULTIPLY expr .)
+    ENQUANTO        reduce using rule 15 (expr -> expr MULTIPLY expr .)
+    IF              reduce using rule 15 (expr -> expr MULTIPLY expr .)
+    EVAL            reduce using rule 15 (expr -> expr MULTIPLY expr .)
+    TERMINO         reduce using rule 15 (expr -> expr MULTIPLY expr .)
+    NUMBER          reduce using rule 15 (expr -> expr MULTIPLY expr .)
+    FIM             reduce using rule 15 (expr -> expr MULTIPLY expr .)
+    ELSE            reduce using rule 15 (expr -> expr MULTIPLY expr .)
+    ENDIF           reduce using rule 15 (expr -> expr MULTIPLY expr .)
+    RPAREN          reduce using rule 15 (expr -> expr MULTIPLY expr .)
+    COMMA           reduce using rule 15 (expr -> expr MULTIPLY expr .)
+
+  ! PLUS            [ shift and go to state 34 ]
+  ! MULTIPLY        [ shift and go to state 35 ]
+
+
+state 45
+
+    (16) expr -> LPAREN expr RPAREN .
+
+    THEN            reduce using rule 16 (expr -> LPAREN expr RPAREN .)
+    PLUS            reduce using rule 16 (expr -> LPAREN expr RPAREN .)
+    MULTIPLY        reduce using rule 16 (expr -> LPAREN expr RPAREN .)
+    ID              reduce using rule 16 (expr -> LPAREN expr RPAREN .)
+    ZERO            reduce using rule 16 (expr -> LPAREN expr RPAREN .)
+    ENQUANTO        reduce using rule 16 (expr -> LPAREN expr RPAREN .)
+    IF              reduce using rule 16 (expr -> LPAREN expr RPAREN .)
+    EVAL            reduce using rule 16 (expr -> LPAREN expr RPAREN .)
+    TERMINO         reduce using rule 16 (expr -> LPAREN expr RPAREN .)
+    NUMBER          reduce using rule 16 (expr -> LPAREN expr RPAREN .)
+    FIM             reduce using rule 16 (expr -> LPAREN expr RPAREN .)
+    ELSE            reduce using rule 16 (expr -> LPAREN expr RPAREN .)
+    ENDIF           reduce using rule 16 (expr -> LPAREN expr RPAREN .)
+    RPAREN          reduce using rule 16 (expr -> LPAREN expr RPAREN .)
+    COMMA           reduce using rule 16 (expr -> LPAREN expr RPAREN .)
+
+
+state 46
+
+    (12) cmd -> EVAL LPAREN expr COMMA . expr COMMA cmds RPAREN
+    (14) expr -> . expr PLUS expr
+    (15) expr -> . expr MULTIPLY expr
+    (16) expr -> . LPAREN expr RPAREN
+    (17) expr -> . NUMBER
+    (18) expr -> . ID
+    (19) expr -> . NEG expr
+
+    LPAREN          shift and go to state 24
+    NUMBER          shift and go to state 25
+    ID              shift and go to state 26
+    NEG             shift and go to state 27
+
+    expr                           shift and go to state 51
+
+state 47
+
+    (13) cmd -> EVAL cmds NUMBER FIM .
+
+    ID              reduce using rule 13 (cmd -> EVAL cmds NUMBER FIM .)
+    ZERO            reduce using rule 13 (cmd -> EVAL cmds NUMBER FIM .)
+    ENQUANTO        reduce using rule 13 (cmd -> EVAL cmds NUMBER FIM .)
+    IF              reduce using rule 13 (cmd -> EVAL cmds NUMBER FIM .)
+    EVAL            reduce using rule 13 (cmd -> EVAL cmds NUMBER FIM .)
+    TERMINO         reduce using rule 13 (cmd -> EVAL cmds NUMBER FIM .)
+    NUMBER          reduce using rule 13 (cmd -> EVAL cmds NUMBER FIM .)
+    FIM             reduce using rule 13 (cmd -> EVAL cmds NUMBER FIM .)
+    ELSE            reduce using rule 13 (cmd -> EVAL cmds NUMBER FIM .)
+    ENDIF           reduce using rule 13 (cmd -> EVAL cmds NUMBER FIM .)
+    RPAREN          reduce using rule 13 (cmd -> EVAL cmds NUMBER FIM .)
+
+
+state 48
+
+    (9) cmd -> ENQUANTO ID FACA cmds FIM .
+
+    ID              reduce using rule 9 (cmd -> ENQUANTO ID FACA cmds FIM .)
+    ZERO            reduce using rule 9 (cmd -> ENQUANTO ID FACA cmds FIM .)
+    ENQUANTO        reduce using rule 9 (cmd -> ENQUANTO ID FACA cmds FIM .)
+    IF              reduce using rule 9 (cmd -> ENQUANTO ID FACA cmds FIM .)
+    EVAL            reduce using rule 9 (cmd -> ENQUANTO ID FACA cmds FIM .)
+    TERMINO         reduce using rule 9 (cmd -> ENQUANTO ID FACA cmds FIM .)
+    NUMBER          reduce using rule 9 (cmd -> ENQUANTO ID FACA cmds FIM .)
+    FIM             reduce using rule 9 (cmd -> ENQUANTO ID FACA cmds FIM .)
+    ELSE            reduce using rule 9 (cmd -> ENQUANTO ID FACA cmds FIM .)
+    ENDIF           reduce using rule 9 (cmd -> ENQUANTO ID FACA cmds FIM .)
+    RPAREN          reduce using rule 9 (cmd -> ENQUANTO ID FACA cmds FIM .)
+
+
+state 49
+
+    (10) cmd -> IF expr THEN cmds ELSE . cmds ENDIF
+    (5) cmds -> . cmd cmds
+    (6) cmds -> . cmd
+    (7) cmd -> . ID EQUALS expr
+    (8) cmd -> . ZERO LPAREN ID RPAREN
+    (9) cmd -> . ENQUANTO ID FACA cmds FIM
+    (10) cmd -> . IF expr THEN cmds ELSE cmds ENDIF
+    (11) cmd -> . IF expr THEN cmds ENDIF
+    (12) cmd -> . EVAL LPAREN expr COMMA expr COMMA cmds RPAREN
+    (13) cmd -> . EVAL cmds NUMBER FIM
+
+    ID              shift and go to state 13
+    ZERO            shift and go to state 14
+    ENQUANTO        shift and go to state 15
+    IF              shift and go to state 16
+    EVAL            shift and go to state 17
+
+    cmds                           shift and go to state 52
+    cmd                            shift and go to state 12
+
+state 50
+
+    (11) cmd -> IF expr THEN cmds ENDIF .
+
+    ID              reduce using rule 11 (cmd -> IF expr THEN cmds ENDIF .)
+    ZERO            reduce using rule 11 (cmd -> IF expr THEN cmds ENDIF .)
+    ENQUANTO        reduce using rule 11 (cmd -> IF expr THEN cmds ENDIF .)
+    IF              reduce using rule 11 (cmd -> IF expr THEN cmds ENDIF .)
+    EVAL            reduce using rule 11 (cmd -> IF expr THEN cmds ENDIF .)
+    TERMINO         reduce using rule 11 (cmd -> IF expr THEN cmds ENDIF .)
+    NUMBER          reduce using rule 11 (cmd -> IF expr THEN cmds ENDIF .)
+    FIM             reduce using rule 11 (cmd -> IF expr THEN cmds ENDIF .)
+    ELSE            reduce using rule 11 (cmd -> IF expr THEN cmds ENDIF .)
+    ENDIF           reduce using rule 11 (cmd -> IF expr THEN cmds ENDIF .)
+    RPAREN          reduce using rule 11 (cmd -> IF expr THEN cmds ENDIF .)
+
+
+state 51
+
+    (12) cmd -> EVAL LPAREN expr COMMA expr . COMMA cmds RPAREN
+    (14) expr -> expr . PLUS expr
+    (15) expr -> expr . MULTIPLY expr
+
+    COMMA           shift and go to state 53
+    PLUS            shift and go to state 34
+    MULTIPLY        shift and go to state 35
+
+
+state 52
+
+    (10) cmd -> IF expr THEN cmds ELSE cmds . ENDIF
+
+    ENDIF           shift and go to state 54
+
+
+state 53
+
+    (12) cmd -> EVAL LPAREN expr COMMA expr COMMA . cmds RPAREN
+    (5) cmds -> . cmd cmds
+    (6) cmds -> . cmd
+    (7) cmd -> . ID EQUALS expr
+    (8) cmd -> . ZERO LPAREN ID RPAREN
+    (9) cmd -> . ENQUANTO ID FACA cmds FIM
+    (10) cmd -> . IF expr THEN cmds ELSE cmds ENDIF
+    (11) cmd -> . IF expr THEN cmds ENDIF
+    (12) cmd -> . EVAL LPAREN expr COMMA expr COMMA cmds RPAREN
+    (13) cmd -> . EVAL cmds NUMBER FIM
+
+    ID              shift and go to state 13
+    ZERO            shift and go to state 14
+    ENQUANTO        shift and go to state 15
+    IF              shift and go to state 16
+    EVAL            shift and go to state 17
+
+    cmds                           shift and go to state 55
+    cmd                            shift and go to state 12
+
+state 54
+
+    (10) cmd -> IF expr THEN cmds ELSE cmds ENDIF .
+
+    ID              reduce using rule 10 (cmd -> IF expr THEN cmds ELSE cmds ENDIF .)
+    ZERO            reduce using rule 10 (cmd -> IF expr THEN cmds ELSE cmds ENDIF .)
+    ENQUANTO        reduce using rule 10 (cmd -> IF expr THEN cmds ELSE cmds ENDIF .)
+    IF              reduce using rule 10 (cmd -> IF expr THEN cmds ELSE cmds ENDIF .)
+    EVAL            reduce using rule 10 (cmd -> IF expr THEN cmds ELSE cmds ENDIF .)
+    TERMINO         reduce using rule 10 (cmd -> IF expr THEN cmds ELSE cmds ENDIF .)
+    NUMBER          reduce using rule 10 (cmd -> IF expr THEN cmds ELSE cmds ENDIF .)
+    FIM             reduce using rule 10 (cmd -> IF expr THEN cmds ELSE cmds ENDIF .)
+    ELSE            reduce using rule 10 (cmd -> IF expr THEN cmds ELSE cmds ENDIF .)
+    ENDIF           reduce using rule 10 (cmd -> IF expr THEN cmds ELSE cmds ENDIF .)
+    RPAREN          reduce using rule 10 (cmd -> IF expr THEN cmds ELSE cmds ENDIF .)
+
+
+state 55
+
+    (12) cmd -> EVAL LPAREN expr COMMA expr COMMA cmds . RPAREN
+
+    RPAREN          shift and go to state 56
+
+
+state 56
+
+    (12) cmd -> EVAL LPAREN expr COMMA expr COMMA cmds RPAREN .
+
+    ID              reduce using rule 12 (cmd -> EVAL LPAREN expr COMMA expr COMMA cmds RPAREN .)
+    ZERO            reduce using rule 12 (cmd -> EVAL LPAREN expr COMMA expr COMMA cmds RPAREN .)
+    ENQUANTO        reduce using rule 12 (cmd -> EVAL LPAREN expr COMMA expr COMMA cmds RPAREN .)
+    IF              reduce using rule 12 (cmd -> EVAL LPAREN expr COMMA expr COMMA cmds RPAREN .)
+    EVAL            reduce using rule 12 (cmd -> EVAL LPAREN expr COMMA expr COMMA cmds RPAREN .)
+    TERMINO         reduce using rule 12 (cmd -> EVAL LPAREN expr COMMA expr COMMA cmds RPAREN .)
+    NUMBER          reduce using rule 12 (cmd -> EVAL LPAREN expr COMMA expr COMMA cmds RPAREN .)
+    FIM             reduce using rule 12 (cmd -> EVAL LPAREN expr COMMA expr COMMA cmds RPAREN .)
+    ELSE            reduce using rule 12 (cmd -> EVAL LPAREN expr COMMA expr COMMA cmds RPAREN .)
+    ENDIF           reduce using rule 12 (cmd -> EVAL LPAREN expr COMMA expr COMMA cmds RPAREN .)
+    RPAREN          reduce using rule 12 (cmd -> EVAL LPAREN expr COMMA expr COMMA cmds RPAREN .)
+
